@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import com.joshuakissoon.slick.exception.InsufficientDetailsException;
+import java.sql.Connection;
 
 /**
  * Interface governing the databases
@@ -37,7 +38,14 @@ public interface Database
      *
      * @param stat the sql prepared statement to execute
      *
-     * @return ArrayList<HashMap> The data returned by the query
+     * @return ArrayList The data returned by the query
      */
     public ArrayList<HashMap<String, Object>> select(final PreparedStatement stat);
+
+    /**
+     * Get the active connection to the database
+     *
+     * @return Connection The active db connection
+     */
+    public Connection getConnection();
 }
