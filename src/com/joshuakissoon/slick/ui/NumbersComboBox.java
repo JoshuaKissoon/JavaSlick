@@ -12,27 +12,33 @@ import com.joshuakissoon.slick.KeyValue;
  */
 public class NumbersComboBox extends JComboBox<KeyValue<Integer, String>>
 {
-
+    
     public NumbersComboBox(final Integer startValue, final Integer endValue)
     {
-
+        
         this.addItem(new KeyValue<>(0, "-- Select --"));
-
+        
         for (int i = startValue; i <= endValue; i++)
         {
             this.addItem(new KeyValue<>(i, i + ""));
         }
     }
-
+    
+    public void setSelectedNumber(final Integer selectedItem)
+    {
+        KeyValue<Integer, String> kv = new KeyValue<>(selectedItem, selectedItem + "");
+        this.setSelectedItem(kv);
+    }
+    
     public Integer getSelectedNumber() throws NoSuchElementException
     {
         KeyValue<Integer, String> selected = (KeyValue) this.getSelectedItem();
-
+        
         if (0 == selected.getKey())
         {
             throw new NoSuchElementException("No Item Selected");
         }
-
+        
         return selected.getKey();
     }
 }
