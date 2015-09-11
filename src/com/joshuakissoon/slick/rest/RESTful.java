@@ -1,6 +1,7 @@
 package com.joshuakissoon.slick.rest;
 
 import com.google.gson.Gson;
+import com.sun.javafx.scene.shape.PathUtils;
 import java.util.HashMap;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -8,8 +9,6 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedHashMap;
-import javax.ws.rs.core.MultivaluedMap;
 import org.glassfish.jersey.client.ClientConfig;
 
 /**
@@ -21,14 +20,20 @@ import org.glassfish.jersey.client.ClientConfig;
 public class RESTful
 {
 
+    public static String GET(final String url)
+    {
+        return RESTful.GET(url, new HashMap<>());
+    }
+
     /**
      * Method to perform a HTTP GET request
      *
-     * @param url The URL which to call the request from
+     * @param url     The URL which to call the request from
+     * @param headers
      *
      * @return String The output of the request
      */
-    public static String GET(final String url)
+    public static String GET(final String url, final HashMap<String, String> headers)
     {
         ClientConfig config = new ClientConfig();
         Client client = ClientBuilder.newClient(config);
@@ -39,15 +44,21 @@ public class RESTful
         return target.request().accept(MediaType.APPLICATION_JSON).get(String.class);
     }
 
+    public static String POST(final String url, final HashMap<String, String> params)
+    {
+        return RESTful.POST(url, params, new HashMap<>());
+    }
+
     /**
      * Method to perform a HTTP POST request
      *
-     * @param url    The URL which to call the request from
-     * @param params The parameters to send in the request
+     * @param url     The URL which to call the request from
+     * @param params  The parameters to send in the request
+     * @param headers
      *
      * @return String The output of the request
      */
-    public static String POST(final String url, final HashMap<String, String> params)
+    public static String POST(final String url, final HashMap<String, String> params, final HashMap<String, String> headers)
     {
         ClientConfig config = new ClientConfig();
         Client client = ClientBuilder.newClient(config);
@@ -58,6 +69,12 @@ public class RESTful
 
         Entity json = Entity.entity(data, MediaType.APPLICATION_JSON_TYPE);
         Invocation.Builder builder = target.request(MediaType.APPLICATION_JSON_TYPE);
+
+        for (String key : headers.keySet())
+        {
+            builder.header(key, headers.get(key));
+        }
+
         return builder.post(json, String.class);
     }
 
