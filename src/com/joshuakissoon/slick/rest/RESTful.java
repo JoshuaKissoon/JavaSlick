@@ -1,7 +1,6 @@
 package com.joshuakissoon.slick.rest;
 
 import com.google.gson.Gson;
-import com.sun.javafx.scene.shape.PathUtils;
 import java.util.HashMap;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -20,7 +19,7 @@ import org.glassfish.jersey.client.ClientConfig;
 public class RESTful
 {
 
-    public static String GET(final String url)
+    public static JsonResponse GET(final String url)
     {
         return RESTful.GET(url, new HashMap<>());
     }
@@ -33,7 +32,7 @@ public class RESTful
      *
      * @return String The output of the request
      */
-    public static String GET(final String url, final HashMap<String, String> headers)
+    public static JsonResponse GET(final String url, final HashMap<String, String> headers)
     {
         ClientConfig config = new ClientConfig();
         Client client = ClientBuilder.newClient(config);
@@ -41,10 +40,10 @@ public class RESTful
         WebTarget target = client.target(url);
 
         // Get JSON
-        return target.request().accept(MediaType.APPLICATION_JSON).get(String.class);
+        return new JsonResponse(target.request().accept(MediaType.APPLICATION_JSON).get(String.class));
     }
 
-    public static String POST(final String url, final HashMap<String, String> params)
+    public static JsonResponse POST(final String url, final HashMap<String, String> params)
     {
         return RESTful.POST(url, params, new HashMap<>());
     }
@@ -58,7 +57,7 @@ public class RESTful
      *
      * @return String The output of the request
      */
-    public static String POST(final String url, final HashMap<String, String> params, final HashMap<String, String> headers)
+    public static JsonResponse POST(final String url, final HashMap<String, String> params, final HashMap<String, String> headers)
     {
         ClientConfig config = new ClientConfig();
         Client client = ClientBuilder.newClient(config);
@@ -75,7 +74,9 @@ public class RESTful
             builder.header(key, headers.get(key));
         }
 
-        return builder.post(json, String.class);
+        String jsonResponse = builder.post(json, String.class);
+
+        return new JsonResponse(jsonResponse);
     }
 
     /**
@@ -86,7 +87,7 @@ public class RESTful
      *
      * @return String The output of the request
      */
-    public static String PUT(final String url, final HashMap<String, String> params)
+    public static JsonResponse PUT(final String url, final HashMap<String, String> params)
     {
         ClientConfig config = new ClientConfig();
         Client client = ClientBuilder.newClient(config);
@@ -97,7 +98,7 @@ public class RESTful
 
         Entity json = Entity.entity(data, MediaType.APPLICATION_JSON_TYPE);
         Invocation.Builder builder = target.request(MediaType.APPLICATION_JSON_TYPE);
-        return builder.put(json, String.class);
+        return new JsonResponse(builder.put(json, String.class));
     }
 
     /**
@@ -107,7 +108,7 @@ public class RESTful
      *
      * @return String The output of the request
      */
-    public static String DELETE(final String url)
+    public static JsonResponse DELETE(final String url)
     {
         ClientConfig config = new ClientConfig();
         Client client = ClientBuilder.newClient(config);
@@ -115,7 +116,7 @@ public class RESTful
         WebTarget target = client.target(url);
 
         Invocation.Builder builder = target.request(MediaType.APPLICATION_JSON_TYPE);
-        return builder.delete(String.class);
+        return new JsonResponse(builder.delete(String.class));
     }
 
 }

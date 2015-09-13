@@ -36,28 +36,21 @@ public class Test
         HashMap<String, String> values = new HashMap<>();
         values.put("userId", "admin");
         values.put("password", "Pass1233~");
-        String jsonResponse = RESTful.POST("http://localhost/codeli/?urlq=user/login", values);
-        
-        System.out.println(jsonResponse);
+        JsonResponse jsonResponse = RESTful.POST("http://localhost/codeli/?urlq=user/login", values);
+       
 
-        JsonParser parser = new JsonParser();
-        JsonObject jObject = parser.parse(jsonResponse).getAsJsonObject();
-        JsonObject jDataObject = parser.parse(jObject.get("data").getAsString()).getAsJsonObject();
-        HashMap<String, String> data = gson.fromJson(jDataObject, new TypeToken<HashMap<String, String>>()
-        {
-        }.getType());
-
-        token = data.get("token");
+        token = jsonResponse.getData().get("token");
+        System.out.println(token);
     }
 
     public void testExampleModule()
     {
-        HashMap<String, String> values = new HashMap<>();
-        values.put("someval", "someval");
-        HashMap<String, String> headers = new HashMap<>();
-        headers.put("AuthorizationToken", token);
-        String jsonResponse = RESTful.POST("http://localhost/codeli/?urlq=example/numbers", values, headers);
-        System.out.println(jsonResponse);
+//        HashMap<String, String> values = new HashMap<>();
+//        values.put("someval", "someval");
+//        HashMap<String, String> headers = new HashMap<>();
+//        headers.put("AuthorizationToken", token);
+//        String jsonResponse = RESTful.POST("http://localhost/codeli/?urlq=example/numbers", values, headers);
+//        System.out.println(jsonResponse);
     }
 
     public static void main(String[] args)
