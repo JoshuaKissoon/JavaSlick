@@ -1,6 +1,7 @@
-package com.joshuakissoon.slick.rest;
+package com.joshuakissoon.slick.api.rest;
 
 import com.google.gson.Gson;
+import com.joshuakissoon.slick.api.JsonResponse;
 import java.util.HashMap;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;

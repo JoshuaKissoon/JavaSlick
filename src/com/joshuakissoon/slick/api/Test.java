@@ -1,5 +1,6 @@
-package com.joshuakissoon.slick.rest;
+package com.joshuakissoon.slick.api;
 
+import com.joshuakissoon.slick.api.rest.RESTful;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;

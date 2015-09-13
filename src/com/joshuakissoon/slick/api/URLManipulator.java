@@ -1,4 +1,4 @@
-package com.joshuakissoon.slick.rest;
+package com.joshuakissoon.slick.api;
 
 import java.net.URI;
 import javax.ws.rs.core.UriBuilder;

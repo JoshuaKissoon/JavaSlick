@@ -1,4 +1,4 @@
-package com.joshuakissoon.slick.rest;
+package com.joshuakissoon.slick.api;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -51,7 +51,7 @@ public class JsonResponse
         this.success = jObject.get("success").getAsBoolean();
         this.message = jObject.get("message").getAsString();
         JsonObject jDataObject = new JsonParser().parse(jObject.get("data").getAsString()).getAsJsonObject();
-        this.data = gson.fromJson(jDataObject, new TypeToken<HashMap<String, String>>()
+        this.data = gson.fromJson(jDataObject, new TypeToken<HashMap<String, Object>>()
         {
         }.getType());
 
