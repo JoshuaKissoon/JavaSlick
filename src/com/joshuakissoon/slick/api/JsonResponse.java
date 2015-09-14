@@ -18,7 +18,7 @@ public class JsonResponse
     public final String jsonResponse;
     private final Gson gson;
     private final JsonParser parser;
-    private HashMap<String, String> data;
+    private JsonObject responseObject;
     private Boolean success;
     private String message;
 
@@ -31,7 +31,7 @@ public class JsonResponse
     public JsonResponse(final String jsonResponse)
     {
         this.jsonResponse = jsonResponse;
-        
+
         this.parseData();
     }
 
@@ -44,29 +44,42 @@ public class JsonResponse
      */
     private void parseData()
     {
-        JsonObject jObject = parser.parse(this.jsonResponse).getAsJsonObject();
-
-        System.out.println(this.jsonResponse);
-
-        this.success = jObject.get("success").getAsBoolean();
-        this.message = jObject.get("message").getAsString();
-        JsonObject jDataObject = new JsonParser().parse(jObject.get("data").getAsString()).getAsJsonObject();
-        this.data = gson.fromJson(jDataObject, new TypeToken<HashMap<String, Object>>()
-        {
-        }.getType());
+        responseObject = parser.parse(this.jsonResponse).getAsJsonObject();
+        this.success = responseObject.get("success").getAsBoolean();
+        this.message = responseObject.get("message").getAsString();
 
     }
 
-    public HashMap<String, String> getData()
+    /**
+     * Method to get the data returned by the API call
+     *
+     * @return HashMap<String, Object> The returned data
+     *
+     * @todo Log the exception
+     */
+    public HashMap<String, Object> getData()
     {
-        return this.data;
+        HashMap<String, Object> data;
+        try
+        {
+            JsonObject jDataObject = new JsonParser().parse(responseObject.get("data").getAsString()).getAsJsonObject();
+            data = gson.fromJson(jDataObject, new TypeToken<HashMap<String, Object>>()
+            {
+            }.getType());
+        }
+        catch (IllegalStateException ex)
+        {
+            data = new HashMap<>();
+        }
+
+        return data;
     }
-    
+
     public Boolean isSuccessful()
     {
         return this.success;
     }
-    
+
     public String getMessage()
     {
         return this.message;

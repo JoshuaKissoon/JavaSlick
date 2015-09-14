@@ -2,9 +2,6 @@ package com.joshuakissoon.slick.api;
 
 import com.joshuakissoon.slick.api.rest.RESTful;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.reflect.TypeToken;
 import java.util.HashMap;
 
 /**
@@ -38,9 +35,8 @@ public class Test
         values.put("userId", "admin");
         values.put("password", "Pass1233~");
         JsonResponse jsonResponse = RESTful.POST("http://localhost/codeli/?urlq=user/login", values);
-       
 
-        token = jsonResponse.getData().get("token");
+        token = (String) jsonResponse.getData().get("token");
         System.out.println(token);
     }
 
