@@ -18,10 +18,12 @@ public class Test
     private final Gson gson;
 
     private String token;
+    private RESTful restful;
 
     
     {
         gson = new Gson();
+        restful = new RESTful();
     }
 
     public Test()
@@ -34,20 +36,19 @@ public class Test
         HashMap<String, String> values = new HashMap<>();
         values.put("userId", "admin");
         values.put("password", "Pass1233~");
-        JsonResponse jsonResponse = RESTful.POST("http://localhost/codeli/?urlq=user/login", values);
 
-        token = (String) jsonResponse.getData().get("token");
-        System.out.println(token);
+        JsonResponse jsonResponse = restful.POST("http://localhost/codeli/?urlq=user/login", values);
+
+        token = (String) jsonResponse.getData().get("accessToken");
+        restful.setAccessToken(token);
     }
 
     public void testExampleModule()
     {
-//        HashMap<String, String> values = new HashMap<>();
-//        values.put("someval", "someval");
-//        HashMap<String, String> headers = new HashMap<>();
-//        headers.put("AuthorizationToken", token);
-//        String jsonResponse = RESTful.POST("http://localhost/codeli/?urlq=example/numbers", values, headers);
-//        System.out.println(jsonResponse);
+        HashMap<String, String> values = new HashMap<>();
+        values.put("someval", "someval");
+        JsonResponse jsonResponse = restful.POST("http://localhost/codeli/?urlq=example/numbers", values);
+        System.out.println(jsonResponse.getData());
     }
 
     public static void main(String[] args)

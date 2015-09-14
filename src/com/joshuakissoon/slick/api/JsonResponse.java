@@ -31,7 +31,7 @@ public class JsonResponse
     public JsonResponse(final String jsonResponse)
     {
         this.jsonResponse = jsonResponse;
-
+        
         this.parseData();
     }
 
@@ -62,8 +62,7 @@ public class JsonResponse
         HashMap<String, Object> data;
         try
         {
-            JsonObject jDataObject = new JsonParser().parse(responseObject.get("data").getAsString()).getAsJsonObject();
-            data = gson.fromJson(jDataObject, new TypeToken<HashMap<String, Object>>()
+            data = gson.fromJson(responseObject.get("data"), new TypeToken<HashMap<String, Object>>()
             {
             }.getType());
         }

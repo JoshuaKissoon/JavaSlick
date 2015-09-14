@@ -24,8 +24,10 @@ public class ModuleManager
 
     /**
      * Register all modules in the system with module manager
+     *
+     * @param module
      */
-    private void registerModule(SlickModule module)
+    public void registerModule(final SlickModule module)
     {
         this.modules.add(module);
     }
@@ -33,5 +35,13 @@ public class ModuleManager
     public ArrayList<SlickModule> getModules()
     {
         return this.modules;
+    }
+    
+    public void loadModules()
+    {
+        for(SlickModule mod : this.getModules())
+        {
+            mod.bootstrap();
+        }
     }
 }

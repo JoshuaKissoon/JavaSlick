@@ -20,9 +20,26 @@ import org.glassfish.jersey.client.ClientConfig;
 public class RESTful
 {
 
-    public static JsonResponse GET(final String url)
+    private String accessToken;
+
+    public RESTful()
     {
-        return RESTful.GET(url, new HashMap<>());
+
+    }
+
+    public RESTful(final String accessToken)
+    {
+        this.setAccessToken(accessToken);
+    }
+
+    public final void setAccessToken(final String accessToken)
+    {
+        this.accessToken = accessToken;
+    }
+
+    public JsonResponse GET(final String url)
+    {
+        return this.GET(url, new HashMap<>());
     }
 
     /**
@@ -33,7 +50,7 @@ public class RESTful
      *
      * @return String The output of the request
      */
-    public static JsonResponse GET(final String url, final HashMap<String, String> headers)
+    public JsonResponse GET(final String url, final HashMap<String, String> headers)
     {
         ClientConfig config = new ClientConfig();
         Client client = ClientBuilder.newClient(config);
@@ -44,9 +61,9 @@ public class RESTful
         return new JsonResponse(target.request().accept(MediaType.APPLICATION_JSON).get(String.class));
     }
 
-    public static JsonResponse POST(final String url, final HashMap<String, String> params)
+    public JsonResponse POST(final String url, final HashMap<String, String> params)
     {
-        return RESTful.POST(url, params, new HashMap<>());
+        return this.POST(url, params, new HashMap<>());
     }
 
     /**
@@ -58,7 +75,7 @@ public class RESTful
      *
      * @return String The output of the request
      */
-    public static JsonResponse POST(final String url, final HashMap<String, String> params, final HashMap<String, String> headers)
+    public JsonResponse POST(final String url, final HashMap<String, String> params, final HashMap<String, String> headers)
     {
         ClientConfig config = new ClientConfig();
         Client client = ClientBuilder.newClient(config);
@@ -70,12 +87,15 @@ public class RESTful
         Entity json = Entity.entity(data, MediaType.APPLICATION_JSON_TYPE);
         Invocation.Builder builder = target.request(MediaType.APPLICATION_JSON_TYPE);
 
+        builder.header("accessToken", this.accessToken);
         for (String key : headers.keySet())
         {
             builder.header(key, headers.get(key));
         }
 
         String jsonResponse = builder.post(json, String.class);
+
+        System.out.println(jsonResponse);
 
         return new JsonResponse(jsonResponse);
     }
@@ -88,7 +108,7 @@ public class RESTful
      *
      * @return String The output of the request
      */
-    public static JsonResponse PUT(final String url, final HashMap<String, String> params)
+    public JsonResponse PUT(final String url, final HashMap<String, String> params)
     {
         ClientConfig config = new ClientConfig();
         Client client = ClientBuilder.newClient(config);
@@ -109,7 +129,7 @@ public class RESTful
      *
      * @return String The output of the request
      */
-    public static JsonResponse DELETE(final String url)
+    public JsonResponse DELETE(final String url)
     {
         ClientConfig config = new ClientConfig();
         Client client = ClientBuilder.newClient(config);
