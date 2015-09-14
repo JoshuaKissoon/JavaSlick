@@ -61,7 +61,7 @@ public class RESTful
         return new JsonResponse(target.request().accept(MediaType.APPLICATION_JSON).get(String.class));
     }
 
-    public JsonResponse POST(final String url, final HashMap<String, String> params)
+    public JsonResponse POST(final String url, final HashMap<String, Object> params)
     {
         return this.POST(url, params, new HashMap<>());
     }
@@ -75,7 +75,7 @@ public class RESTful
      *
      * @return String The output of the request
      */
-    public JsonResponse POST(final String url, final HashMap<String, String> params, final HashMap<String, String> headers)
+    public JsonResponse POST(final String url, final HashMap<String, Object> params, final HashMap<String, String> headers)
     {
         ClientConfig config = new ClientConfig();
         Client client = ClientBuilder.newClient(config);
@@ -108,7 +108,21 @@ public class RESTful
      *
      * @return String The output of the request
      */
-    public JsonResponse PUT(final String url, final HashMap<String, String> params)
+    public JsonResponse PUT(final String url, final HashMap<String, Object> params)
+    {
+        return this.PUT(url, params, new HashMap());
+    }
+
+    /**
+     * Method to perform a HTTP PUT request
+     *
+     * @param url     The URL which to call the request from
+     * @param params  The parameters to send in the request
+     * @param headers
+     *
+     * @return String The output of the request
+     */
+    public JsonResponse PUT(final String url, final HashMap<String, Object> params, final HashMap<String, String> headers)
     {
         ClientConfig config = new ClientConfig();
         Client client = ClientBuilder.newClient(config);
@@ -119,6 +133,13 @@ public class RESTful
 
         Entity json = Entity.entity(data, MediaType.APPLICATION_JSON_TYPE);
         Invocation.Builder builder = target.request(MediaType.APPLICATION_JSON_TYPE);
+
+        builder.header("accessToken", this.accessToken);
+        for (String key : headers.keySet())
+        {
+            builder.header(key, headers.get(key));
+        }
+
         return new JsonResponse(builder.put(json, String.class));
     }
 

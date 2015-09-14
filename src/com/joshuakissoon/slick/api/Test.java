@@ -33,7 +33,7 @@ public class Test
 
     public void loginUser()
     {
-        HashMap<String, String> values = new HashMap<>();
+        HashMap<String, Object> values = new HashMap<>();
         values.put("userId", "admin");
         values.put("password", "Pass1233~");
 
@@ -45,7 +45,7 @@ public class Test
 
     public void testExampleModule()
     {
-        HashMap<String, String> values = new HashMap<>();
+        HashMap<String, Object> values = new HashMap<>();
         values.put("someval", "someval");
         JsonResponse jsonResponse = restful.POST("http://localhost/codeli/?urlq=example/numbers", values);
         System.out.println(jsonResponse.getData());

@@ -47,4 +47,12 @@ public interface APIObject<IDType>
      * @param data {HashMap<String, Object>} The data for the class
      */
     public void loadFromMap(final HashMap<String, Object> data);
+
+    /**
+     * Method to put the class data into a hashmap
+     * - Used to post data to the API
+     *
+     * @return HashMap<String, Object> The hashmap with the data
+     */
+    public HashMap<String, Object> getDataMap();
 }
