@@ -35,6 +35,13 @@ public interface APIObject<IDType>
     public boolean update();
 
     /**
+     * Method to delete the object
+     *
+     * @return Boolean Whether the operation was successful
+     */
+    public boolean delete();
+
+    /**
      * Loads a row from the database with the data from this object
      *
      * @return Boolean Whether the operation was successful

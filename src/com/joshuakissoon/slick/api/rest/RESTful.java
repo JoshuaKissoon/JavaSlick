@@ -82,7 +82,7 @@ public class RESTful
 
         WebTarget target = client.target(url);
 
-        String data = new Gson().toJson(params);
+        String data = new Gson().toJson(params, HashMap.class);
 
         Entity json = Entity.entity(data, MediaType.APPLICATION_JSON_TYPE);
         Invocation.Builder builder = target.request(MediaType.APPLICATION_JSON_TYPE);
@@ -158,6 +158,9 @@ public class RESTful
         WebTarget target = client.target(url);
 
         Invocation.Builder builder = target.request(MediaType.APPLICATION_JSON_TYPE);
+        
+        builder.header("accessToken", this.accessToken);
+        
         return new JsonResponse(builder.delete(String.class));
     }
 

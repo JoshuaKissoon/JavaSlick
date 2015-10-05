@@ -30,6 +30,8 @@ public class JsonResponse
 
     public JsonResponse(final String jsonResponse)
     {
+        System.out.println(jsonResponse);
+        System.out.println();
         this.jsonResponse = jsonResponse;
         
         this.parseData();
