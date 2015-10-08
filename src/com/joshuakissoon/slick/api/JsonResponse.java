@@ -28,10 +28,12 @@ public class JsonResponse
         gson = new Gson();
     }
 
-    public JsonResponse(final String jsonResponse)
+    public JsonResponse(final String jsonResponse, final String url)
     {
+        System.out.println(url);
         System.out.println(jsonResponse);
-        System.out.println();
+        System.out.println("-----------------------------------------------------------------------------------");
+        
         this.jsonResponse = jsonResponse;
         
         this.parseData();

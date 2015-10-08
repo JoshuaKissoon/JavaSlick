@@ -58,7 +58,8 @@ public class RESTful
         WebTarget target = client.target(url);
 
         // Get JSON
-        return new JsonResponse(target.request().accept(MediaType.APPLICATION_JSON).get(String.class));
+        String resp = target.request().accept(MediaType.APPLICATION_JSON).get(String.class);
+        return new JsonResponse(resp, url);
     }
 
     public JsonResponse POST(final String url, final HashMap<String, Object> params)
@@ -95,9 +96,7 @@ public class RESTful
 
         String jsonResponse = builder.post(json, String.class);
 
-        System.out.println(jsonResponse);
-
-        return new JsonResponse(jsonResponse);
+        return new JsonResponse(jsonResponse, url);
     }
 
     /**
@@ -140,7 +139,7 @@ public class RESTful
             builder.header(key, headers.get(key));
         }
 
-        return new JsonResponse(builder.put(json, String.class));
+        return new JsonResponse(builder.put(json, String.class), url);
     }
 
     /**
@@ -158,10 +157,10 @@ public class RESTful
         WebTarget target = client.target(url);
 
         Invocation.Builder builder = target.request(MediaType.APPLICATION_JSON_TYPE);
-        
+
         builder.header("accessToken", this.accessToken);
-        
-        return new JsonResponse(builder.delete(String.class));
+
+        return new JsonResponse(builder.delete(String.class), url);
     }
 
 }

@@ -15,7 +15,9 @@ public class NumberComboBox extends ComboBox<KeyValue<Integer, String>>
 
     public NumberComboBox(final Integer startValue, final Integer endValue)
     {
-        this.getItems().add(new KeyValue<>(Integer.MIN_VALUE, "-- Select -- "));
+        KeyValue base = new KeyValue<>(Integer.MIN_VALUE, "-- Select -- ");
+        this.getItems().add(base);
+        this.getSelectionModel().select(base);
 
         for (int i = startValue; i <= endValue; i++)
         {
