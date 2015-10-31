@@ -13,10 +13,19 @@ import com.joshuakissoon.slick.KeyValue;
 public class NumbersJComboBox extends JComboBox<KeyValue<Integer, String>>
 {
     
+    private final KeyValue<Integer, String> baseItem = new KeyValue<>(0, "-- Select --");
+    
     public NumbersJComboBox(final Integer startValue, final Integer endValue)
     {
-        
-        this.addItem(new KeyValue<>(0, "-- Select --"));
+        this(startValue, endValue, true);
+    }
+    
+    public NumbersJComboBox(final Integer startValue, final Integer endValue, final Boolean showBaseValue)
+    {
+        if (showBaseValue)
+        {
+            this.addItem(baseItem);
+        }
         
         for (int i = startValue; i <= endValue; i++)
         {
