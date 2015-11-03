@@ -18,6 +18,12 @@ public class DatabaseConfiguration
     private Boolean printQueries = false;
 
     public DatabaseConfiguration(final String database, final String username,
+            final String password, final String host)
+    {
+        this(database, username, password, host, 3306);
+    }
+
+    public DatabaseConfiguration(final String database, final String username,
             final String password, final String host, final Integer port)
     {
         this.setDatabase(database);
