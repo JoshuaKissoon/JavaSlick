@@ -13,7 +13,7 @@ import java.io.Writer;
  * @author Joshua Kissoon
  * @since 20151031
  */
-public class SystemLogManager
+public class LogsManager
 {
 
     private final String filename;
@@ -21,7 +21,7 @@ public class SystemLogManager
     /**
      * @param filename The name of the file where logs are to be written
      */
-    public SystemLogManager(final String filename)
+    public LogsManager(final String filename)
     {
         this.filename = filename;
     }
