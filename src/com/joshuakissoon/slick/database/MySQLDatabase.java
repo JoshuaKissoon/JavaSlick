@@ -186,6 +186,7 @@ public class MySQLDatabase implements Database
         return (numRowsUpdated > 0);
     }
 
+    @Override
     public int getLastInsertId()
     {
         return this.lastInsertId;

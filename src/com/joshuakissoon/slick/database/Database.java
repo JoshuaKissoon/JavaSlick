@@ -91,4 +91,11 @@ public interface Database
      * @throws java.sql.SQLException
      */
     public boolean insert(final PreparedStatement stat, final String sql) throws SQLException;
+
+    /**
+     * Get the ID of the last inserted row
+     *
+     * @return
+     */
+    public int getLastInsertId();
 }
