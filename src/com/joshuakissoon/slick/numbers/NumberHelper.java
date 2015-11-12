@@ -4,7 +4,7 @@ package com.joshuakissoon.slick.numbers;
  * Helper class with number functions
  *
  * @author Joshua
- * @since
+ * @since 20150101
  */
 public class NumberHelper
 {
@@ -36,5 +36,40 @@ public class NumberHelper
             default:
                 return "th";
         }
+    }
+
+    public static boolean isInteger(String s)
+    {
+        /* Tests whether the given value is an integer */
+        try
+        {
+            Integer.parseInt(s);
+        }
+        catch (NumberFormatException e)
+        {
+            return false;
+        }
+        // only got here if we didn't return false
+        return true;
+    }
+
+    public static boolean isFloat(String s)
+    {
+        /* Tests whether the given value is an integer */
+        try
+        {
+            Float.parseFloat(s);
+        }
+        catch (NumberFormatException e)
+        {
+            return false;
+        }
+        // only got here if we didn't return false
+        return true;
+    }
+
+    public static boolean isNumberic(String s)
+    {
+        return isFloat(s) || isInteger(s);
     }
 }

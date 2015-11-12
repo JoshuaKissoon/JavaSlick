@@ -56,9 +56,13 @@ public class RESTful
         Client client = ClientBuilder.newClient(config);
 
         WebTarget target = client.target(url);
+        
+        Invocation.Builder builder = target.request(MediaType.APPLICATION_JSON_TYPE);
 
+        builder.header("accessToken", this.accessToken);
+        
         // Get JSON
-        String resp = target.request().accept(MediaType.APPLICATION_JSON).get(String.class);
+        String resp = builder.accept(MediaType.APPLICATION_JSON).get(String.class);
         return new JsonResponse(resp, url);
     }
 

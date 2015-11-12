@@ -88,7 +88,7 @@ public class DatabaseConfiguration
         return printQueries;
     }
 
-    public void setPrintQueries(Boolean printQueries)
+    public void setPrintQueries(final Boolean printQueries)
     {
         this.printQueries = printQueries;
     }
