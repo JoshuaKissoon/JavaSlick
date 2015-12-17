@@ -89,8 +89,6 @@ public class MySQLDatabase implements Database
     {
         /* Setup Hikari CP */
         hikariConfig = new HikariConfig();
-        hikariConfig.setMinimumIdle(5);
-        hikariConfig.setMaximumPoolSize(10);
         hikariConfig.setDataSourceClassName("com.mysql.jdbc.jdbc2.optional.MysqlDataSource");
         hikariConfig.addDataSourceProperty("serverName", config.getHost());
         hikariConfig.addDataSourceProperty("port", config.getPort());
