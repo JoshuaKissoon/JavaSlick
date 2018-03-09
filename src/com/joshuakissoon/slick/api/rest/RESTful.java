@@ -56,11 +56,11 @@ public class RESTful
         Client client = ClientBuilder.newClient(config);
 
         WebTarget target = client.target(url);
-        
+
         Invocation.Builder builder = target.request(MediaType.APPLICATION_JSON_TYPE);
 
         builder.header("accessToken", this.accessToken);
-        
+
         // Get JSON
         String resp = builder.accept(MediaType.APPLICATION_JSON).get(String.class);
         return new JsonResponse(resp, url);
@@ -98,7 +98,17 @@ public class RESTful
             builder.header(key, headers.get(key));
         }
 
-        String jsonResponse = builder.post(json, String.class);
+        String jsonResponse = "";
+
+        try
+        {
+            jsonResponse = builder.post(json, String.class);
+        }
+        catch (javax.ws.rs.NotFoundException ex)
+        {
+            System.out.println(ex.getMessage());
+            System.out.println("URL: " + url);
+        }
 
         return new JsonResponse(jsonResponse, url);
     }
@@ -143,7 +153,18 @@ public class RESTful
             builder.header(key, headers.get(key));
         }
 
-        return new JsonResponse(builder.put(json, String.class), url);
+        String jsonResponse = "";
+        try
+        {
+            jsonResponse = builder.put(json, String.class);
+        }
+        catch (javax.ws.rs.NotFoundException ex)
+        {
+            System.out.println(ex.getMessage());
+            System.out.println("URL: " + url);
+        }
+
+        return new JsonResponse(jsonResponse, url);
     }
 
     /**
